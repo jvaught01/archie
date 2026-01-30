@@ -2,10 +2,11 @@
 
 import { useEffect, useState } from 'react';
 import { DragDropContext, Droppable, Draggable, DropResult } from '@hello-pangea/dnd';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Task } from '@/lib/db';
 
 export default function Home() {
-  const [tasks, setTasks] = useState<Task[]>([]);
+  const queryClient = useQueryClient();
   const [newTaskTitle, setNewTaskTitle] = useState('');
   const [newTaskDesc, setNewTaskDesc] = useState('');
   const [newTaskPriority, setNewTaskPriority] = useState<'low' | 'medium' | 'high'>('medium');
@@ -13,22 +14,21 @@ export default function Home() {
   const [editingColumn, setEditingColumn] = useState<string | null>(null);
   const [mounted, setMounted] = useState(false);
 
+  // React Query for real-time polling
+  const { data: tasks = [] } = useQuery<Task[]>({
+    queryKey: ['tasks'],
+    queryFn: async () => {
+      const res = await fetch('/api/tasks');
+      if (!res.ok) throw new Error('Failed to fetch tasks');
+      return res.json();
+    },
+    refetchInterval: 3000, // Poll every 3 seconds
+    refetchIntervalInBackground: true, // Keep polling even when tab is not focused
+  });
+
   useEffect(() => {
     setMounted(true);
-    fetchTasks();
   }, []);
-
-  const fetchTasks = async () => {
-    try {
-      const response = await fetch('/api/tasks');
-      if (response.ok) {
-        const data = await response.json();
-        setTasks(data);
-      }
-    } catch (error) {
-      console.error('Error fetching tasks:', error);
-    }
-  };
 
   const createTask = async (status: string = 'todo') => {
     if (!newTaskTitle.trim()) return;
@@ -58,7 +58,7 @@ export default function Home() {
         setNewTaskPriority('medium');
         setShowNewTask(false);
         setEditingColumn(null);
-        fetchTasks();
+        queryClient.invalidateQueries({ queryKey: ['tasks'] });
       }
     } catch (error) {
       console.error('Error creating task:', error);
@@ -74,7 +74,7 @@ export default function Home() {
       });
 
       if (response.ok) {
-        fetchTasks();
+        queryClient.invalidateQueries({ queryKey: ['tasks'] });
       }
     } catch (error) {
       console.error('Error updating task:', error);
@@ -91,7 +91,7 @@ export default function Home() {
       });
 
       if (response.ok) {
-        fetchTasks();
+        queryClient.invalidateQueries({ queryKey: ['tasks'] });
       }
     } catch (error) {
       console.error('Error deleting task:', error);
