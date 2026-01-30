@@ -307,15 +307,15 @@ export default function Home() {
       )}
 
       {/* Kanban Board */}
-      <div className="p-6">
+      <div className="p-6 h-[calc(100vh-140px)]">
         <DragDropContext onDragEnd={onDragEnd}>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 h-full">
             {columns.map((column) => {
               const columnTasks = getTasksByStatus(column.id);
               return (
-                <div key={column.id} className="flex flex-col">
-                  {/* Column Header */}
-                  <div className="bg-dark-bg-secondary px-4 py-3 rounded-t-xl border border-b-0 border-dark-border">
+                <div key={column.id} className="flex flex-col h-full max-h-full">
+                  {/* Column Header - Sticky */}
+                  <div className="bg-dark-bg-secondary px-4 py-3 rounded-t-xl border border-b-0 border-dark-border flex-shrink-0 sticky top-0 z-10">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2.5">
                         {getColumnIcon(column.id)}
@@ -338,17 +338,18 @@ export default function Home() {
                     </div>
                   </div>
 
-                  {/* Column Content */}
+                  {/* Column Content - Scrollable */}
                   <Droppable droppableId={column.id}>
                     {(provided, snapshot) => (
                       <div
                         ref={provided.innerRef}
                         {...provided.droppableProps}
-                        className={`flex-1 bg-dark-bg-secondary/50 px-3 py-3 min-h-[500px] border border-t-0 rounded-b-xl transition-all duration-200 ${
+                        className={`flex-1 min-h-0 bg-dark-bg-secondary/50 px-3 py-3 border border-t-0 rounded-b-xl transition-all duration-200 overflow-y-auto scrollbar-thin ${
                           snapshot.isDraggingOver 
                             ? 'drop-zone-active border-orange-500/40 bg-orange-500/5' 
                             : 'border-dark-border'
                         }`}
+                        style={{ maxHeight: 'calc(100vh - 220px)' }}
                       >
                         <div className="space-y-3">
                           {columnTasks.map((task, index) => (

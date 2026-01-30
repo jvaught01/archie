@@ -46,6 +46,30 @@ body {
   background: var(--text-muted);
 }
 
+/* Thin scrollbar for columns */
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: var(--border-primary);
+  border-radius: 3px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* Firefox scrollbar */
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-primary) transparent;
+}
+
 /* Smooth transitions */
 .transition-all-smooth {
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
