@@ -22,7 +22,7 @@ export default function Home() {
       if (!res.ok) throw new Error('Failed to fetch tasks');
       return res.json();
     },
-    refetchInterval: 3000, // Poll every 3 seconds
+    refetchInterval: 7000, // Poll every 3 seconds
     refetchIntervalInBackground: true, // Keep polling even when tab is not focused
   });
 
