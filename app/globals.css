@@ -2,6 +2,88 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --bg-primary: #0d1117;
+  --bg-secondary: #161b22;
+  --bg-tertiary: #21262d;
+  --bg-card: #1c2128;
+  --bg-card-hover: #252b33;
+  --border-primary: #30363d;
+  --border-secondary: #21262d;
+  --text-primary: #e6edf3;
+  --text-secondary: #8b949e;
+  --text-muted: #6e7681;
+  --accent: #f97316;
+  --accent-hover: #ea580c;
+}
+
+* {
+  box-sizing: border-box;
+}
+
 body {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+/* Custom scrollbar for dark mode */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-primary);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* Smooth transitions */
+.transition-all-smooth {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Card glow effect on hover */
+.card-glow:hover {
+  box-shadow: 0 0 20px rgba(249, 115, 22, 0.1);
+}
+
+/* Priority badge animations */
+.priority-badge {
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.priority-badge:hover {
+  transform: scale(1.05);
+}
+
+/* Column drop zone highlight */
+.drop-zone-active {
+  background: linear-gradient(180deg, rgba(249, 115, 22, 0.08) 0%, rgba(249, 115, 22, 0.02) 100%);
+  border-color: rgba(249, 115, 22, 0.4) !important;
+}
+
+/* Dragging card style */
+.dragging-card {
+  transform: rotate(2deg);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+/* Focus ring style */
+input:focus, textarea:focus, select:focus, button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Modal backdrop blur */
+.modal-backdrop {
+  backdrop-filter: blur(4px);
 }
