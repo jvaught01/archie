@@ -1,0 +1,11 @@
+▲ Next.js 16.1.6 (Turbopack)
+- Local:         http://localhost:3001
+- Network:       http://192.168.1.10:3001
+
+✓ Starting...
+✓ Ready in 961ms
+ GET /api/tasks 200 in 560ms (compile: 533ms, render: 27ms)
+ GET /api/tasks 200 in 44ms (compile: 4ms, render: 40ms)
+ GET /api/tasks 200 in 42ms (compile: 35ms, render: 8ms)
+ GET /api/tasks 200 in 53ms (compile: 16ms, render: 37ms)
+ GET /api/tasks 200 in 15ms (compile: 6ms, render: 10ms)

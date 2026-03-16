@@ -14,13 +14,13 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { title, description, priority } = body;
+    const { title, description, priority, type, category, created_by } = body;
     
     if (!title) {
       return NextResponse.json({ error: 'Title is required' }, { status: 400 });
     }
     
-    const task = createTask(title, description, priority);
+    const task = createTask(title, description, priority, type, category, created_by);
     return NextResponse.json(task, { status: 201 });
   } catch (error) {
     console.error('Error creating task:', error);
